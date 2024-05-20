@@ -22,6 +22,7 @@ void main() {
           'Melt the butter in a skillet and fry the bread slices.',
           'Put the toasted bread slices on a serving plate.',
           'Sprinkle with chopped parsley and grated garlic and serve.',
+
         ],
         videoUrls: [
         'How to Make Egg Bread for Breakfast?'
@@ -332,72 +333,89 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0),
+                                    ),
                                   ),
-                                  child: ListView.builder(
-                                    itemCount: widget.recipe.ingredients.length,
-                                    itemBuilder: (context, index) {
-                                      final ingredient = widget.recipe.ingredients[index];
-                                      final totalIngredientCount = ingredient.numIngredient * _selectedServings;
-                                      final formattedName = '$totalIngredientCount ${ingredient.name[0].toUpperCase()}${ingredient.name.substring(1)}';
-                                      return ListTile(
-                                        title: Text(formattedName),
-                                      );
-                                    },
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: List.generate(
+                                        widget.recipe.ingredients.length,
+                                            (index) {
+                                          final ingredient = widget.recipe.ingredients[index];
+                                          final totalIngredientCount = ingredient.numIngredient * _selectedServings;
+                                          final formattedName = '$totalIngredientCount ${ingredient.name[0].toUpperCase()}${ingredient.name.substring(1)}';
+                                          return ListTile(
+                                            title: Text(formattedName),
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 // Instructions Page
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0),
+                                    ),
                                   ),
-                                  child: ListView.builder(
-                                    itemCount: widget.recipe.recipeSteps.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(widget.recipe.recipeSteps[index]),
-                                      );
-                                    },
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: List.generate(
+                                        widget.recipe.recipeSteps.length,
+                                            (index) => ListTile(
+                                          title: Text(widget.recipe.recipeSteps[index]),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 // Video Page
                                 Container(
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0),
+                                    ),
                                   ),
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        title: Text('Egg Bread Recipe Video'),
-                                      ),
-                                      YoutubePlayer(
-                                        controller: YoutubePlayerController(
-                                          initialVideoId: YoutubePlayer.convertUrlToId(
-                                            'https://www.youtube.com/watch?v=u5pR11WjXt8',
-                                          )!,
-                                          flags: YoutubePlayerFlags(
-                                            autoPlay: false,
-                                            mute: false,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        ListTile(
+                                          title: Text('Egg Bread Recipe Video'),
+                                        ),
+                                        YoutubePlayer(
+                                          controller: YoutubePlayerController(
+                                            initialVideoId: YoutubePlayer.convertUrlToId(
+                                              'https://www.youtube.com/watch?v=u5pR11WjXt8',
+                                            )!,
+                                            flags: YoutubePlayerFlags(
+                                              autoPlay: false,
+                                              mute: false,
+                                            ),
                                           ),
+                                          showVideoProgressIndicator: true,
+                                          progressIndicatorColor: Colors.amber,
+                                          progressColors: ProgressBarColors(
+                                            playedColor: Colors.amber,
+                                            handleColor: Colors.amberAccent,
+                                          ),
+                                          onReady: () {
+                                            print('Player is ready.');
+                                          },
+                                          onEnded: (data) {
+                                            print('Video has ended.');
+                                          },
                                         ),
-                                        showVideoProgressIndicator: true,
-                                        progressIndicatorColor: Colors.amber,
-                                        progressColors: ProgressBarColors(
-                                          playedColor: Colors.amber,
-                                          handleColor: Colors.amberAccent,
-                                        ),
-                                        onReady: () {
-                                          print('Player is ready.');
-                                        },
-                                        onEnded: (data) {
-                                          print('Video has ended.');
-                                        },
-                                      ),
-                                      Expanded(
-                                        child: ListView.builder(
+                                        ListView.builder(
                                           shrinkWrap: true,
+                                          physics: NeverScrollableScrollPhysics(),
                                           itemCount: widget.recipe.videoUrls.length,
                                           itemBuilder: (context, index) {
                                             return ListTile(
@@ -405,8 +423,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                             );
                                           },
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
