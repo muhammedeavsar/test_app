@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
@@ -152,7 +153,10 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                                 SizedBox(height: 3.0),
                                                 Text(
                                                   widget.recipe.title,
-                                                  style: TextStyle(fontSize: 24.0),
+                                                  style: TextStyle(
+                                                      fontSize: 24.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 SizedBox(height: 3.0),
@@ -160,7 +164,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Icon(
-                                                      Icons.access_time,
+                                                      CupertinoIcons.time,
                                                       size: 20.0,
                                                     ),
                                                     SizedBox(width: 5.0),
@@ -214,13 +218,16 @@ class _IngredientsPageState extends State<IngredientsPage> {
                         child: Row(
                           children: [
                             IconButton(
-                              icon: Icon(Icons.arrow_back),
+                              icon: Icon(CupertinoIcons.back),
                               onPressed: () {},
                             ),
                             ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.blueGrey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                               child: Text(
                                 'Breakfast',
@@ -231,13 +238,13 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             ),
                             Spacer(),
                             IconButton(
-                              icon: Icon(Icons.share),
+                              icon: Icon(CupertinoIcons.arrowshape_turn_up_right),
                               onPressed: () {},
                             ),
                             IconButton(
                               icon: _isLiked
-                                  ? Icon(Icons.favorite, color: Colors.grey)
-                                  : Icon(Icons.favorite_border),
+                                  ? Icon(CupertinoIcons.heart, color: Colors.grey)
+                                  : Icon(CupertinoIcons.heart),
                               onPressed: () {
                                 setState(() {
                                   _isLiked = !_isLiked;
@@ -270,13 +277,16 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30.0),
-                                    topRight: Radius.circular(30.0),
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
                                   ),
                                 ),
                                 child: Text(
                                   'Health Benefits',
-                                  style: TextStyle(fontSize: 15.0),
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -290,8 +300,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(30.0),
-                                    bottomRight: Radius.circular(30.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
                                   ),
                                 ),
                                 child: SingleChildScrollView(
@@ -423,8 +433,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
                             ),
                           ),
                           child: SingleChildScrollView(
@@ -444,32 +454,43 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           ),
                         ),
                         // Instructions Page
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
-                            ),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: List.generate(
-                                widget.recipe.recipeSteps.length,
-                                    (index) => ListTile(
-                                  title: Text(widget.recipe.recipeSteps[index]),
-                                ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: List.generate(
+                            widget.recipe.recipeSteps.length,
+                                (index) => ListTile(
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Step ${index + 1}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(widget.recipe.recipeSteps[index]),
+                                ],
                               ),
                             ),
                           ),
                         ),
+                      ),
+                    ),
                         // Video Page
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
                             ),
                           ),
                           child: SingleChildScrollView(
@@ -477,7 +498,11 @@ class _IngredientsPageState extends State<IngredientsPage> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 ListTile(
-                                  title: Text('Egg Bread Recipe Video'),
+                                  title: Text('Egg Bread Recipe Video',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  ),
                                 ),
                                 YoutubePlayer(
                                   controller: YoutubePlayerController(
