@@ -22,11 +22,16 @@ void main() {
           'Melt the butter in a skillet and fry the bread slices.',
           'Put the toasted bread slices on a serving plate.',
           'Sprinkle with chopped parsley and grated garlic and serve.',
-
         ],
         videoUrls: [
-        'How to Make Egg Bread for Breakfast?'
-        'Tips and Tricks The sliced bread should be neither too thin nor too thick. If you slice the bread too thickly, it may become doughy inside. If the oil is well heated, the bread will absorb less oil.',
+          'https://www.youtube.com/watch?v=u5pR11WjXt8',
+        ],
+        videoAbout: [
+          'How to Make Egg Bread for Breakfast?',
+          'Tips and Tricks: The sliced bread should be neither too thin nor too thick. If you slice the bread too thickly, it may become doughy inside. If the oil is well heated, the bread will absorb less oil.',
+        ],
+        healthBenefits: [
+          'Eggs are a great source of protein. Parsley is rich in vitamins A, C, and K. Garlic can boost the immune system.',
         ],
       ),
     ),
@@ -47,6 +52,8 @@ class Recipe {
   final List<Ingredient> ingredients;
   final List<String> recipeSteps;
   final List<String> videoUrls;
+  final List<String> videoAbout;
+  final List<String> healthBenefits;
 
 
   Recipe({
@@ -56,6 +63,8 @@ class Recipe {
     required this.ingredients,
     required this.recipeSteps,
     required this.videoUrls,
+    required this.videoAbout,
+    required this.healthBenefits,
   });
 }
 
@@ -79,128 +88,130 @@ class _IngredientsPageState extends State<IngredientsPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double containerWidth = (screenWidth - (4 * 10)) / 3;
-    double deviceHeight = MediaQuery.of(context).size.height;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white70,
-          body: Stack(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    height: 300,
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40.0),
-                              bottomRight: Radius.circular(40.0),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white70,
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40.0),
+                            bottomRight: Radius.circular(40.0),
+                          ),
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(0.0),
+                              BlendMode.srcOver,
                             ),
-                            child: ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.0),
-                                BlendMode.srcOver,
-                              ),
-                              child: Image.asset(
-                                'assets/image/recipe_image.jpg',
-                                fit: BoxFit.cover,
-                                height: 270,
-                                width: MediaQuery.of(context).size.width,
-                              ),
+                            child: Image.asset(
+                              'assets/image/recipe_image.jpg',
+                              fit: BoxFit.cover,
+                              height: 270,
+                              width: MediaQuery.of(context).size.width,
                             ),
                           ),
                         ),
-                        Positioned(
-                          left: 10.0,
-                          right: 10.0,
-                          bottom: 0.0,
-                          child: Container(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Column(
-                                children: [
-                                  Card(
-                                    margin: EdgeInsets.symmetric(horizontal: 10.0),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(0.0),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            SizedBox(height: 0.0),
-                                            Container(
-                                              height: 90,
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(height: 3.0),
-                                                  Text(
-                                                    widget.recipe.title,
-                                                    style: TextStyle(fontSize: 24.0),
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                  SizedBox(height: 3.0),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.access_time,
-                                                        size: 20.0,
-                                                      ),
-                                                      SizedBox(width: 5.0),
-                                                      Text(
-                                                        '${_selectedServings * widget.recipe.prepTime} min',
-                                                        style: TextStyle(fontSize: 15.0),
-                                                      ),
-                                                      SizedBox(width: 20.0),
-                                                      Icon(
-                                                        Icons.group,
-                                                        size: 20.0,
-                                                      ),
-                                                      SizedBox(width: 5.0),
-                                                      DropdownButton<int>(
-                                                        value: _selectedServings,
-                                                        items: List.generate(
-                                                            10, (index) => index + 1)
-                                                            .map((e) =>
-                                                            DropdownMenuItem<int>(
-                                                              value: e,
-                                                              child: Text('$e Serves',
-                                                                  style: TextStyle(
-                                                                      fontSize: 15.0)),
-                                                            ))
-                                                            .toList(),
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            _selectedServings = value!;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                      ),
+                      Positioned(
+                        left: 10.0,
+                        right: 10.0,
+                        bottom: 0.0,
+                        child: Container(
+                          height: 90,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                            child: Column(
+                              children: [
+                                Card(
+                                  margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(0.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          SizedBox(height: 0.0),
+                                          Container(
+                                            height: 90,
+                                            color: Colors.white,
+                                            child: Column(
+                                              children: [
+                                                SizedBox(height: 3.0),
+                                                Text(
+                                                  widget.recipe.title,
+                                                  style: TextStyle(fontSize: 24.0),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(height: 3.0),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.access_time,
+                                                      size: 20.0,
+                                                    ),
+                                                    SizedBox(width: 5.0),
+                                                    Text(
+                                                      '${_selectedServings * widget.recipe.prepTime} min',
+                                                      style: TextStyle(fontSize: 15.0),
+                                                    ),
+                                                    SizedBox(width: 20.0),
+                                                    Icon(
+                                                      Icons.group,
+                                                      size: 20.0,
+                                                    ),
+                                                    SizedBox(width: 5.0),
+                                                    DropdownButton<int>(
+                                                      value: _selectedServings,
+                                                      items: List.generate(
+                                                          10, (index) => index + 1)
+                                                          .map((e) =>
+                                                          DropdownMenuItem<int>(
+                                                            value: e,
+                                                            child: Text('$e Serves',
+                                                                style: TextStyle(
+                                                                    fontSize: 15.0)),
+                                                          ))
+                                                          .toList(),
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          _selectedServings = value!;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        Row(
+                      ),
+                      Positioned(
+                        top: 10.0,
+                        left: 10.0,
+                        right: 10.0,
+                        child: Row(
                           children: [
                             IconButton(
                               icon: Icon(Icons.arrow_back),
@@ -209,7 +220,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey,
+                                backgroundColor: Colors.blueGrey,
                               ),
                               child: Text(
                                 'Breakfast',
@@ -235,83 +246,269 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             )
                           ],
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  width: 400,
+                  height: 90,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 0,
+                              left: 20,
+                              right: 20,
+                              child: Container(
+                                width: 400,
+                                height: 38,
+                                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Health Benefits',
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 26,
+                              left: 20,
+                              right: 20,
+                              bottom: 10,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0),
+                                  ),
+                                ),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        children: List.generate(
+                                          widget.recipe.healthBenefits.length,
+                                              (index) => ListTile(
+                                            title: Text(
+                                              widget.recipe.healthBenefits[index],
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _pageController.jumpToPage(0);
+                                  });
+                                },
+                                child: Container(
+                                  width: containerWidth,
+                                  decoration: BoxDecoration(
+                                    color: _selectedIndex == 0 ? Colors.black : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Center(
+                                    child: Text(
+                                      'Ingredients',
+                                      style: TextStyle(color: _selectedIndex == 0 ? Colors.white : Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _pageController.jumpToPage(1);
+                                  });
+                                },
+                                child: Container(
+                                  width: containerWidth,
+                                  decoration: BoxDecoration(
+                                    color: _selectedIndex == 1 ? Colors.black : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Center(
+                                    child: Text(
+                                      'Instructions',
+                                      style: TextStyle(color: _selectedIndex == 1 ? Colors.white : Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _pageController.jumpToPage(2);
+                                  });
+                                },
+                                child: Container(
+                                  width: containerWidth,
+                                  decoration: BoxDecoration(
+                                    color: _selectedIndex == 2 ? Colors.black : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Center(
+                                    child: Text(
+                                      'Video',
+                                      style: TextStyle(color: _selectedIndex == 2 ? Colors.white : Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30.0),
+                ),
+                SizedBox(height: 10,),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: PageView(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
+                      children: [
+                        // Ingredients Page
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: List.generate(
+                                widget.recipe.ingredients.length,
+                                    (index) {
+                                  final ingredient = widget.recipe.ingredients[index];
+                                  final totalIngredientCount = ingredient.numIngredient * _selectedServings;
+                                  final formattedName = '$totalIngredientCount ${ingredient.name[0].toUpperCase()}${ingredient.name.substring(1)}';
+                                  return ListTile(
+                                    title: Text(formattedName),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Instructions Page
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: List.generate(
+                                widget.recipe.recipeSteps.length,
+                                    (index) => ListTile(
+                                  title: Text(widget.recipe.recipeSteps[index]),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Video Page
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      _pageController.animateToPage(0, duration: Duration(milliseconds: 500), curve: Curves.ease);
-                                    });
-                                  },
-                                  child: Container(
-                                    width: containerWidth,
-                                    decoration: BoxDecoration(
-                                      color: _selectedIndex == 0 ? Colors.black : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Center(
-                                      child: Text(
-                                        'Ingredients',
-                                        style: TextStyle(color: _selectedIndex == 0 ? Colors.white : Colors.black),
-                                      ),
+                                ListTile(
+                                  title: Text('Egg Bread Recipe Video'),
+                                ),
+                                YoutubePlayer(
+                                  controller: YoutubePlayerController(
+                                    initialVideoId: YoutubePlayer.convertUrlToId(
+                                      widget.recipe.videoUrls.isNotEmpty ? widget.recipe.videoUrls[0] : '',
+                                    )!,
+                                    flags: YoutubePlayerFlags(
+                                      autoPlay: false,
+                                      mute: false,
                                     ),
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      _pageController.animateToPage(1, duration: Duration(milliseconds: 500), curve: Curves.ease);
-                                    });
-                                  },
-                                  child: Container(
-                                    width: containerWidth,
-                                    decoration: BoxDecoration(
-                                      color: _selectedIndex == 1 ? Colors.black : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Center(
-                                      child: Text(
-                                        'Instructions',
-                                        style: TextStyle(color: _selectedIndex == 1 ? Colors.white : Colors.black),
-                                      ),
-                                    ),
+                                  showVideoProgressIndicator: true,
+                                  progressIndicatorColor: Colors.amber,
+                                  progressColors: ProgressBarColors(
+                                    playedColor: Colors.amber,
+                                    handleColor: Colors.amberAccent,
                                   ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      _pageController.animateToPage(2, duration: Duration(milliseconds: 500), curve: Curves.ease);
-                                    });
+                                  onReady: () {
+                                    print('Player is ready.');
                                   },
-                                  child: Container(
-                                    width: containerWidth,
-                                    decoration: BoxDecoration(
-                                      color: _selectedIndex == 2 ? Colors.black : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Center(
-                                      child: Text(
-                                        'Video',
-                                        style: TextStyle(color: _selectedIndex == 2 ? Colors.white : Colors.black),
+                                  onEnded: (data) {
+                                    print('Video has ended.');
+                                  },
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                       children: List.generate(
+                                      widget.recipe.videoAbout.length,
+                                          (index) => ListTile(
+                                        title: Text(widget.recipe.videoAbout[index]),
                                       ),
                                     ),
                                   ),
@@ -319,128 +516,16 @@ class _IngredientsPageState extends State<IngredientsPage> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Expanded(
-                            child: PageView(
-                              controller: _pageController,
-                              onPageChanged: (index) {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                              },
-                              children: [
-                                // Ingredients Page
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30.0),
-                                      topRight: Radius.circular(30.0),
-                                    ),
-                                  ),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: List.generate(
-                                        widget.recipe.ingredients.length,
-                                            (index) {
-                                          final ingredient = widget.recipe.ingredients[index];
-                                          final totalIngredientCount = ingredient.numIngredient * _selectedServings;
-                                          final formattedName = '$totalIngredientCount ${ingredient.name[0].toUpperCase()}${ingredient.name.substring(1)}';
-                                          return ListTile(
-                                            title: Text(formattedName),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Instructions Page
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30.0),
-                                      topRight: Radius.circular(30.0),
-                                    ),
-                                  ),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: List.generate(
-                                        widget.recipe.recipeSteps.length,
-                                            (index) => ListTile(
-                                          title: Text(widget.recipe.recipeSteps[index]),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // Video Page
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30.0),
-                                      topRight: Radius.circular(30.0),
-                                    ),
-                                  ),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                        ListTile(
-                                          title: Text('Egg Bread Recipe Video'),
-                                        ),
-                                        YoutubePlayer(
-                                          controller: YoutubePlayerController(
-                                            initialVideoId: YoutubePlayer.convertUrlToId(
-                                              'https://www.youtube.com/watch?v=u5pR11WjXt8',
-                                            )!,
-                                            flags: YoutubePlayerFlags(
-                                              autoPlay: false,
-                                              mute: false,
-                                            ),
-                                          ),
-                                          showVideoProgressIndicator: true,
-                                          progressIndicatorColor: Colors.amber,
-                                          progressColors: ProgressBarColors(
-                                            playedColor: Colors.amber,
-                                            handleColor: Colors.amberAccent,
-                                          ),
-                                          onReady: () {
-                                            print('Player is ready.');
-                                          },
-                                          onEnded: (data) {
-                                            print('Video has ended.');
-                                          },
-                                        ),
-                                        ListView.builder(
-                                          shrinkWrap: true,
-                                          physics: NeverScrollableScrollPhysics(),
-                                          itemCount: widget.recipe.videoUrls.length,
-                                          itemBuilder: (context, index) {
-                                            return ListTile(
-                                              title: Text(widget.recipe.videoUrls[index]),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
