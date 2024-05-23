@@ -18,16 +18,22 @@ void main() {
           Ingredient(numIngredient: 1, name: 'Clove of Garlic'),
         ],
         recipeSteps: [
+          'Step 1',
           'Break the eggs into a bowl and beat them,',
+          'Step 2',
           'Dip the bread slices in the egg and soak.',
+          'Step 3',
           'Melt the butter in a skillet and fry the bread slices.',
+          'Step 4',
           'Put the toasted bread slices on a serving plate.',
+          'Step 5',
           'Sprinkle with chopped parsley and grated garlic and serve.',
         ],
         videoUrls: [
           'https://www.youtube.com/watch?v=u5pR11WjXt8',
         ],
         videoAbout: [
+          'Egg Bread Recipe Video',
           'How to Make Egg Bread for Breakfast?',
           'Tips and Tricks: The sliced bread should be neither too thin nor too thick. If you slice the bread too thickly, it may become doughy inside. If the oil is well heated, the bread will absorb less oil.',
         ],
@@ -463,23 +469,19 @@ class _IngredientsPageState extends State<IngredientsPage> {
                         ),
                       ),
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: List.generate(
-                            widget.recipe.recipeSteps.length,
-                                (index) => ListTile(
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Step ${index + 1}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(widget.recipe.recipeSteps[index]),
-                                ],
-                              ),
-                            ),
+                        child: RichText(
+                          text: TextSpan(
+                            children: widget.recipe.recipeSteps.map((step) {
+                              bool isStep = step.startsWith('Step');
+                              return TextSpan(
+                                text: step + '\n',
+                                style: TextStyle(
+                                  fontWeight: isStep ? FontWeight.bold : FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
                       ),
@@ -497,13 +499,21 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                ListTile(
-                                  title: Text('Egg Bread Recipe Video',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20, // You can adjust the font size as needed
+                                      color: Colors.black, // You can adjust the color as needed
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: widget.recipe.videoAbout.isNotEmpty ? widget.recipe.videoAbout[0] : '', // Assuming videoAbout list is not empty
                                       ),
+                                    ],
                                   ),
                                 ),
+                                SizedBox(height: 10,),
                                 YoutubePlayer(
                                   controller: YoutubePlayerController(
                                     initialVideoId: YoutubePlayer.convertUrlToId(
@@ -530,11 +540,17 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                       children: List.generate(
+                                    children: List.generate(
                                       widget.recipe.videoAbout.length,
-                                          (index) => ListTile(
-                                        title: Text(widget.recipe.videoAbout[index]),
-                                      ),
+                                          (index) {
+                                        if (index == 0) {
+                                          return SizedBox.shrink(); // Skip the first element, as it's already displayed as the title
+                                        } else {
+                                          return ListTile(
+                                            title: Text(widget.recipe.videoAbout[index]),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),
