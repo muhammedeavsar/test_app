@@ -17,17 +17,92 @@ void main() {
           Ingredient(numIngredient: 1, name: 'Handful of Chopped Parsley'),
           Ingredient(numIngredient: 1, name: 'Clove of Garlic'),
         ],
-        recipeSteps: [
-          'Step 1',
-          'Break the eggs into a bowl and beat them,',
-          'Step 2',
-          'Dip the bread slices in the egg and soak.',
-          'Step 3',
-          'Melt the butter in a skillet and fry the bread slices.',
-          'Step 4',
-          'Put the toasted bread slices on a serving plate.',
-          'Step 5',
-          'Sprinkle with chopped parsley and grated garlic and serve.',
+        recipeSteps : [
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Step 1 ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
+                ),
+                TextSpan(
+                  text: 'Break the eggs into a bowl and beat them.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Step 2 ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
+                ),
+                TextSpan(
+                  text: 'Dip the bread slices in the egg and soak.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Step 3 ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
+                ),
+                TextSpan(
+                  text: 'Melt the butter in a skillet and fry the bread slices.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Step 4 ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
+                ),
+                TextSpan(
+                  text: 'Put the toasted bread slices on a serving plate.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Step 5 ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
+                ),
+                TextSpan(
+                  text: 'Sprinkle with chopped parsley and grated garlic and serve.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
         ],
         videoUrls: [
           'https://www.youtube.com/watch?v=u5pR11WjXt8',
@@ -57,7 +132,7 @@ class Recipe {
   final int prepTime;
   final int numServes;
   final List<Ingredient> ingredients;
-  final List<String> recipeSteps;
+  final List<RichText> recipeSteps;
   final List<String> videoUrls;
   final List<String> videoAbout;
   final List<String> healthBenefits;
@@ -88,13 +163,16 @@ class _IngredientsPageState extends State<IngredientsPage> {
   int _selectedServings = 1;
   int _selectedIndex = 0;
   bool _isLiked = false;
+  late List<RichText> recipeSteps;
 
   PageController _pageController = PageController();
+
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double containerWidth = (screenWidth - (4 * 10)) / 3;
+    recipeSteps = widget.recipe.recipeSteps;
 
     return SafeArea(
       child: Scaffold(
@@ -460,32 +538,29 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           ),
                         ),
                         // Instructions Page
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: RichText(
-                          text: TextSpan(
-                            children: widget.recipe.recipeSteps.map((step) {
-                              bool isStep = step.startsWith('Step');
-                              return TextSpan(
-                                text: step + '\n',
-                                style: TextStyle(
-                                  fontWeight: isStep ? FontWeight.bold : FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                ),
-                              );
-                            }).toList(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.0),
+                              topRight: Radius.circular(10.0),
+                            ),
+                          ),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: recipeSteps.map((step) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: step,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
                         // Video Page
                         Container(
                           decoration: BoxDecoration(
