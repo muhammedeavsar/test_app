@@ -107,10 +107,31 @@ void main() {
         videoUrls: [
           'https://www.youtube.com/watch?v=u5pR11WjXt8',
         ],
-        videoAbout: [
-          'Egg Bread Recipe Video',
-          'How to Make Egg Bread for Breakfast?',
-          'Tips and Tricks: The sliced bread should be neither too thin nor too thick. If you slice the bread too thickly, it may become doughy inside. If the oil is well heated, the bread will absorb less oil.',
+        videoAbout : [
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'Egg Bread Recipe Video ',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'How to Make Egg Bread for Breakfast?',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: 'Tips and Tricks: The sliced bread should be neither too thin nor too thick. If you slice the bread too thickly, it may become doughy inside. If the oil is well heated, the bread will absorb less oil.',
+                  style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
         ],
         healthBenefits: [
           'Eggs are a great source of protein. Parsley is rich in vitamins A, C, and K. Garlic can boost the immune system.',
@@ -134,7 +155,7 @@ class Recipe {
   final List<Ingredient> ingredients;
   final List<RichText> recipeSteps;
   final List<String> videoUrls;
-  final List<String> videoAbout;
+  final List<RichText> videoAbout;
   final List<String> healthBenefits;
 
 
@@ -164,6 +185,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
   int _selectedIndex = 0;
   bool _isLiked = false;
   late List<RichText> recipeSteps;
+  late List<RichText> videoAbout;
 
   PageController _pageController = PageController();
 
@@ -172,7 +194,8 @@ class _IngredientsPageState extends State<IngredientsPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double containerWidth = (screenWidth - (4 * 10)) / 3;
-    recipeSteps = widget.recipe.recipeSteps;
+    recipeSteps = widget.recipe.recipeSteps.map((step) => RichText(text: step.text)).toList();
+    videoAbout = widget.recipe.videoAbout.map((info) => RichText(text: info.text)).toList();
 
     return SafeArea(
       child: Scaffold(
@@ -530,7 +553,9 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                   final totalIngredientCount = ingredient.numIngredient * _selectedServings;
                                   final formattedName = '$totalIngredientCount ${ingredient.name[0].toUpperCase()}${ingredient.name.substring(1)}';
                                   return ListTile(
-                                    title: Text(formattedName),
+                                    title: Text(formattedName,
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+                                    ),
                                   );
                                 },
                               ),
@@ -574,19 +599,9 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
+                                // Title
                                 RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20, // You can adjust the font size as needed
-                                      color: Colors.black, // You can adjust the color as needed
-                                    ),
-                                    children: [
-                                      TextSpan(
-                                        text: widget.recipe.videoAbout.isNotEmpty ? widget.recipe.videoAbout[0] : '', // Assuming videoAbout list is not empty
-                                      ),
-                                    ],
-                                  ),
+                                  text: videoAbout[0].text, // Extracting text directly from RichText widget
                                 ),
                                 SizedBox(height: 10,),
                                 YoutubePlayer(
@@ -616,13 +631,14 @@ class _IngredientsPageState extends State<IngredientsPage> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: List.generate(
-                                      widget.recipe.videoAbout.length,
+                                      videoAbout.length,
                                           (index) {
                                         if (index == 0) {
                                           return SizedBox.shrink(); // Skip the first element, as it's already displayed as the title
                                         } else {
+                                          // Listing
                                           return ListTile(
-                                            title: Text(widget.recipe.videoAbout[index]),
+                                            title: videoAbout[index], // Directly use RichText widget
                                           );
                                         }
                                       },
