@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:test_app/constants/color.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
@@ -26,11 +28,14 @@ void main() {
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
                 ),
                 TextSpan(
-                  text: '\n',
+                  text: '\n\n',
                 ),
                 TextSpan(
                   text: 'Break the eggs into a bowl and beat them.',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
                 ),
               ],
             ),
@@ -43,11 +48,14 @@ void main() {
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
                 ),
                 TextSpan(
-                  text: '\n',
+                  text: '\n\n',
                 ),
                 TextSpan(
                   text: 'Dip the bread slices in the egg and soak.',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
                 ),
               ],
             ),
@@ -60,11 +68,14 @@ void main() {
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
                 ),
                 TextSpan(
-                  text: '\n',
+                  text: '\n\n',
                 ),
                 TextSpan(
                   text: 'Melt the butter in a skillet and fry the bread slices.',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
                 ),
               ],
             ),
@@ -77,11 +88,14 @@ void main() {
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
                 ),
                 TextSpan(
-                  text: '\n',
+                  text: '\n\n',
                 ),
                 TextSpan(
                   text: 'Put the toasted bread slices on a serving plate.',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
                 ),
               ],
             ),
@@ -94,11 +108,14 @@ void main() {
                   style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
                 ),
                 TextSpan(
-                  text: '\n',
+                  text: '\n\n',
                 ),
                 TextSpan(
                   text: 'Sprinkle with chopped parsley and grated garlic and serve.',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
+                ),
+                TextSpan(
+                  text: '\n',
                 ),
               ],
             ),
@@ -199,13 +216,13 @@ class _IngredientsPageState extends State<IngredientsPage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white70,
+        backgroundColor: HexColor(backgroundColor),
         body: Stack(
           children: [
             Column(
               children: [
                 Container(
-                  height: 300,
+                  height: MediaQuery.of(context).size.height * 0.4, // Ekran yüksekliğinin %40'ı
                   width: MediaQuery.of(context).size.width,
                   child: Stack(
                     children: [
@@ -223,7 +240,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             child: Image.asset(
                               'assets/image/recipe_image.jpg',
                               fit: BoxFit.cover,
-                              height: 270,
+                              height: MediaQuery.of(context).size.height * 0.35,
                               width: MediaQuery.of(context).size.width,
                             ),
                           ),
@@ -326,6 +343,7 @@ class _IngredientsPageState extends State<IngredientsPage> {
                           children: [
                             IconButton(
                               icon: Icon(CupertinoIcons.back),
+                              color: Colors.white,
                               onPressed: () {},
                             ),
                             ElevatedButton(
@@ -345,19 +363,22 @@ class _IngredientsPageState extends State<IngredientsPage> {
                             ),
                             Spacer(),
                             IconButton(
-                              icon: Icon(CupertinoIcons.arrowshape_turn_up_right),
+                              icon: Icon(
+                                CupertinoIcons.arrowshape_turn_up_right,
+                                color: Colors.white,
+                              ),
                               onPressed: () {},
                             ),
                             IconButton(
                               icon: _isLiked
-                                  ? Icon(CupertinoIcons.heart, color: Colors.grey)
-                                  : Icon(CupertinoIcons.heart),
+                                  ? Icon(CupertinoIcons.heart_solid, color: Colors.white)
+                                  : Icon(CupertinoIcons.heart, color: Colors.white),
                               onPressed: () {
                                 setState(() {
                                   _isLiked = !_isLiked;
                                 });
                               },
-                            )
+                            ),
                           ],
                         ),
                       ),
